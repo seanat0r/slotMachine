@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <script href="scripts/script.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1 class="title">The Fortune Slot Machine</h1>
+        <img class="pictureCoin" src="images/coin.png" alt="Coin">
+    </header>
+    <main>
+        <article>
+            <section class="Explanation">
+                <h2>How does it Work?</h2>
+                <p>Click on The button to start the spin. Each spin cost a minimum of 1 Coin.
+                    The more coin you set,
+                    more coins can you win. If you hit 0 Coin you lose. You can anytime reset
+                    with the refresh button underneath the spin button. <br>
+                    <span class="importantText">Beware that refreshing or any other activity that restart or
+                        refreshing this browser tap will delete your Coins and
+                        you need to start again.</span> <br>
+                    I wish you luck</p>
+            </section>
+            <section class="keyboard">
+                <h3>Shortcut for keyboard</h3>
+                <ul class="keyboardShortcuts">
+                    <li>Enter = start a spin OR next</li>
+                    <li>0-9 = set your Coin</li>
+                    <li> R = reset</li> 
+                </ul>
+            </section>
+        </article>
+        <article class="slotMachine" id="slotMachine">
+            <div class="slotMachineFrame">
+                <h2>Do you have Luck?</h2>
+                <div class="slotMachineGrid">
+                    <div class="displayFrame">
+                        <!-- Display the picture from Slot machine -->
+                        <div class="winLose" id="winLose">
+                            <!-- Displays over displayFrame if you Won/Lose -->
+                        </div>
+                    </div>
+                    <div class="button">
+                        <button class="startBtn" id="startBtn">START SPIN!</button>
+                        <button class="refreshBtn" id="refreshBtn">REFRESH</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Left/Right -Foot for CSS only; Just to look better -->
+            <div class="leftFoot"></div>
+            <div class="rightFoot"></div>
+
+        </article>
+    </main>
+</body>
+</html>
