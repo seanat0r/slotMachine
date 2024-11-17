@@ -1,0 +1,118 @@
+/* Reset Style */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+/* Header */
+
+header {
+    display : flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+.title {
+ margin-left: 1rem;
+}
+.coin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    border: #000 solid 1px;
+    padding: 0.5rem;
+}
+.pictureCoin {
+    height: 40px;
+    width: auto;
+}
+.coin > p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Main for Explanation- and Keyboard-section */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+
+}
+.Explanation {
+    justify-self: center;
+    align-self: center;
+    text-align: start;
+    margin-left: 1rem;
+}
+.importantText {
+    font-weight: bold;
+}
+
+/* SlotMachine */
+
+.slotMachine {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #000 solid 1px;
+    width: 80%;
+    text-align: center;
+    margin: 2rem 75% 0 10%;
+}
+.slotMachineGrid {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1rem;
+    height: 7.5rem;
+    width: 40rem;
+    margin-bottom: 2rem;
+}
+.displayFrame {
+    border: #000 solid 1px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.1rem;
+}
+.frame {
+    border: #000 solid 1px;
+}
+.winLose {
+    display: none;
+}
+.button {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+}
+.startBtn, .refreshBtn {
+    margin-top: 10px;
+    width: 6rem;
+    border-radius: 1rem;
+}
+.startBtn {
+    height: 2rem;
+}
+.refreshBtn {
+    height: 1.5rem;
+}
+#userCoinInSlotMachine {
+    width: 6rem;
+    border-radius: 1rem;
+    padding: 0.25rem;
+}
+
+.leftFoot, .rightFoot {
+
+}
