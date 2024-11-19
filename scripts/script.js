@@ -40,9 +40,9 @@ function slotMachine() {
             pity(false);
         },
         spin: function () {
-
+            
         },
-        pitySpin: function () {
+        pitySpin: function (loseStreak) {
 
         }
     }
@@ -67,6 +67,15 @@ function slotMachine() {
             userStats.winStreak = [];
         }
     }
+    startBtn.addEventListener('click', () => {
+        if (userStats.pityFive.length >= 4) {
+            slotMachineStats.pitySpin('pityFive');
+        } else if (userStats.pityThree.length >= 2) {
+            slotMachineStats.pitySpin('pityThree');
+        } else {
+            slotMachineStats.spin();
+        }
+    });
 }
 
 slotMachine();

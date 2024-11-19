@@ -116,3 +116,35 @@ header {
 .leftFoot, .rightFoot {
 
 }
+
+
+/* SlotMachine Icons */
+
+#apple, #cherries, #grapes, #lemon, #orange, #plum, #watermelon {
+    width: auto;
+    height: 120px;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#apple {
+    background-image: url("../images/apple.png");
+}
+#cherries {
+    background-image: url("../images/cherries.png");
+}
+#grapes {
+    background-image: url("../images/grapes.png");
+}
+#lemon {
+    background-image: url("../images/lemon.png");
+}
+#orange {
+    background-image: url("../images/orange.png");
+}
+#plum {
+    background-image: url("../images/plum.png");
+}
+#watermelon {
+    background-image: url("../images/watermelon.png");
+}
