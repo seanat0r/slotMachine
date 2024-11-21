@@ -144,7 +144,7 @@ function slotMachine() {
 					chance: 0.2,
 					action: slotMachineStats.freeWinDouble,
 				},
-				{ type: "JackPot", chance: 0.1, action: slotMachineStats.JackPot },
+				{ type: "JackPot", chance: 0.005, action: slotMachineStats.JackPot },
 			];
 
 			let cumuluativeChance = 0;
@@ -185,6 +185,39 @@ function slotMachine() {
 
 		},
 	};
+
+	frameSpecialEvent = {
+		speicalEvent: [
+			{name: "WinCoin",number: 0, action: winCoin()}, 
+			{name: "X",number: 1, action: lose}, //Free Spin
+			{name: "X",number: 2, action: lose}, //Free Spin
+			{name: "loseScore",number: 3, action: loseScore()}, 
+			{name: "X",number: 4, action: lose}, //Free Spin
+			{name: "loseCoin",number: 5, action: loseCoin()}, 
+			{name: "X",number: 6, action: lose} //Win Event (Score)
+		],
+		loseCoin: function(){
+			let minusCoin = Math.floor(Math.random() * 10) +1;
+			userStats.coin -= minusCoin;
+			coinStats.innerText = userStats.coin;
+		},
+		loseScore: function() {
+			let minusScore = Math.floor(Math.random() * 10) +1;
+			userStats.score -= minusScore;
+			scoreStats.innerText = userStats.score;
+
+		},
+		winCoin: function() {
+			let addCoin = Math.floor(Math.random() * 10) +1;
+			userStats.coin += addCoin;
+			coinStats.innerText = userStats.coin;
+		},
+		winScore: function() {
+
+		},
+
+			
+		}
 
 	function pity(winLose) {
 		if (winLose) {
