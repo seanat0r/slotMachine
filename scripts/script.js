@@ -82,6 +82,11 @@ function slotMachine() {
 
 			createFrameIcon(randomFirstFrame, randomSecondFrame, randomThirdFrame);
 
+			frameSpecialEvent.checkFrameSameNumber(
+				randomFirstFrame,
+				randomSecondFrame,
+				randomThirdFrame
+			);
 
 			if (
 				randomFirstFrame === randomSecondFrame &&
@@ -108,6 +113,12 @@ function slotMachine() {
 
 			createFrameIcon(randomFirstFrame, randomSecondFrame, randomThirdFrame);
 
+			frameSpecialEvent.checkFrameSameNumber(
+				randomFirstFrame,
+				randomSecondFrame,
+				randomThirdFrame
+			);
+
 			if (
 				randomFirstFrame === randomSecondFrame &&
 				randomSecondFrame === randomThirdFrame &&
@@ -126,7 +137,7 @@ function slotMachine() {
 
 			if (userStats.score % 50 === 0 || userStats.spinCount % 5 === 0) {
 				const chance = Math.random();
-				if (chance <= 0.66) {
+				if (chance <= 0.475) {
 					slotMachineStats.scoreTriggerEvent();
 				} else {
 					console.log("No Score-Event: ", userStats.score);
@@ -137,7 +148,11 @@ function slotMachine() {
 		},
 		scoreTriggerEvent: function () {
 			const rewards = [
-				{ type: "Free Spin this round", chance: 0.4, action: slotMachineStats.freeSpin },
+				{
+					type: "Free Spin this round",
+					chance: 0.4,
+					action: slotMachineStats.freeSpin,
+				},
 				{ type: "free Money", chance: 0.3, action: slotMachineStats.freeCoin },
 				{
 					type: "Free Win with double the win",
@@ -162,17 +177,17 @@ function slotMachine() {
 		freeSpin: function () {
 			userStats.coin += inputCoinInSlotMachine;
 			coinStats.innerText = userStats.coin;
-			alert("Score Event: Free Spin this round!")
+			alert("Score Event: Free Spin this round!");
 		},
 		freeCoin: function () {
 			let scoreEventaddCoin = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-			userStats.coin += scoreEventaddCoin
+			userStats.coin += scoreEventaddCoin;
 			coinStats.innerText = userStats.coin;
 			alert("Score Event: EXTRA COIN! +" + scoreEventaddCoin);
 		},
 		freeWinDouble: function () {
 			userStats.doubleWin = true;
-			alert("Score Event: WIN GUARANTEED AND DOUBLE THE WIN!")
+			alert("Score Event: WIN GUARANTEED AND DOUBLE THE WIN!");
 		},
 		JackPot: function () {
 			userStats.coin += Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
@@ -181,43 +196,70 @@ function slotMachine() {
 				"color: lightgreen; font-weight: bold, font-size: 25px"
 			);
 			coinStats.innerText = userStats.coin;
-			alert("Score Event: JACKPOT!!!")
-
+			alert("Score Event: JACKPOT!!!");
 		},
 	};
 
 	frameSpecialEvent = {
 		speicalEvent: [
-			{name: "WinCoin",number: 0, action: winCoin()}, 
-			{name: "X",number: 1, action: lose}, //Free Spin
-			{name: "X",number: 2, action: lose}, //Free Spin
-			{name: "loseScore",number: 3, action: loseScore()}, 
-			{name: "X",number: 4, action: lose}, //Free Spin
-			{name: "loseCoin",number: 5, action: loseCoin()}, 
-			{name: "X",number: 6, action: lose} //Win Event (Score)
+			//Overwiev of the event on wich number
+			{ name: "WinCoin", number: 0},
+			{ name: "nothing", number: 1},
+			{ name: "freeSpin", number: 2},
+			{ name: "nothing", number: 3},
+			{ name: "freeSpin", number: 4},
+			{ name: "nothing", number: 5},
+			{ name: "winScore", number: 6},
 		],
-		loseCoin: function(){
-			let minusCoin = Math.floor(Math.random() * 10) +1;
-			userStats.coin -= minusCoin;
-			coinStats.innerText = userStats.coin;
+		nothing: function () {
+			return;
 		},
-		loseScore: function() {
-			let minusScore = Math.floor(Math.random() * 10) +1;
-			userStats.score -= minusScore;
-			scoreStats.innerText = userStats.score;
-
-		},
-		winCoin: function() {
-			let addCoin = Math.floor(Math.random() * 10) +1;
+		winCoin: function () {
+			let addCoin = Math.floor(Math.random() * 10) + 1;
 			userStats.coin += addCoin;
 			coinStats.innerText = userStats.coin;
 		},
-		winScore: function() {
-
+		winScore: function () {
+			let addScore = Math.floor(Math.random() * 10) + 1;
+			userStats.score += addScore;
+			scoreStats.innerText = userStats.score;
 		},
-
-			
-		}
+		freeSpinEvent: function () {
+			userStats.coin += inputCoinInSlotMachine;
+		},
+		checkFrameSameNumber: function (first, second, third) {
+			if (first === second && first === third && second === third) {
+				frameSpecialEvent.checkFrameWhichEvent(first);
+			}
+		},
+		checkFrameWhichEvent: function (first) {
+			switch (first) {
+				case 0:
+					console.log("SmaeFrameEvent: WinScore");
+					frameSpecialEvent.winCoin();
+					break;
+				case 1:
+				case 3:
+				case 5:
+					console.log("SmaeFrameEvent: nothing");
+					frameSpecialEvent.nothing();
+					break;
+				case 2:
+				case 4:
+					console.log("SmaeFrameEvent: freeSpin");
+					frameSpecialEvent.freeSpinEvent();
+					break;
+				case 6:
+					console.winScore("SameFrameEvent: winScore");
+					frameSpecialEvent.winScore();
+					break;
+				default:
+					console.log(
+						"ERROR: In specialEvent Object; Methode checkFrameWhichEvent. Line 223-241"
+					);
+			}
+		},
+	};
 
 	function pity(winLose) {
 		if (winLose) {
