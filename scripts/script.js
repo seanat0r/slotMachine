@@ -10,7 +10,7 @@ function slotMachine() {
 	const firstFrame = document.querySelector("#firstFrame");
 	const secondFrame = document.querySelector("#secondFrame");
 	const thirdFrame = document.querySelector("#thirdFrame");
-	const DisplayWinLose = document.querySelector("#WinLose");
+	
 
 	//User Object to save Coin and Pity
 	let userStats = {
@@ -348,7 +348,7 @@ function slotMachine() {
 				"Are you sure you want to refresh? You will lose all your money and Score."
 			)
 		) {
-			userStats.coin = 100;
+			userStats.coin = 50;
 			userStats.pityFive = [];
 			userStats.pityThree = [];
 			userStats.winStreak = [];

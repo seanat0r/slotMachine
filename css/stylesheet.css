@@ -10,14 +10,19 @@ main {
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    margin-top: 300px;
 }
 
 /* Header */
 
 header {
+    position: fixed;
     display : flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    top: 0;
+    background-color: #f0f8ff;
 
 }
 .title {
@@ -30,6 +35,7 @@ header {
     margin: 1rem;
     border: #000 solid 1px;
     padding: 0.5rem;
+    background-color: #fff;
 }
 .pictureCoin {
     height: 40px;
@@ -44,8 +50,11 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
     gap: 2rem;
+    height: auto;
+    margin: 2rem;
 
 }
 .Explanation {
@@ -56,6 +65,39 @@ header {
 }
 .importantText {
     font-weight: bold;
+}
+.specialEventExplainer {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    justify-self: center;
+    align-self: center;
+    text-align: start;
+}
+.keyboard {
+    grid-column: 1 / 1;
+    grid-row: 2 / 2;
+    margin-left: 1rem;
+    justify-self: start;
+    align-self: center;
+    text-align: start;
+}
+.keyboardShortcuts {
+    list-style: none;
+}
+/* Display Event/ WinLose */
+.displayEventAndWin {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: 2rem;
+}
+#displayWin {
+    
+}
+#displayEvent {
+
 }
 
 /* SlotMachine */
@@ -69,6 +111,7 @@ header {
     text-align: center;
     margin: 2rem 75% 0 10%;
 }
+
 .slotMachineGrid {
     display: grid;
     grid-template-columns: 3fr 1fr;
