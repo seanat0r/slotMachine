@@ -5,12 +5,13 @@ function slotMachine() {
 	let inputCoinInSlotMachine = parseInt(
 		document.querySelector("#userCoinInSlotMachine").value
 	);
+	let freeSpinCounter = document.querySelector("#freeSpinCounter");
 	const startBtn = document.querySelector("#startBtn");
+	const freeSpinBtn = document.querySelector("#freeSpinBtn");
 	const refreshBtn = document.querySelector("#refreshBtn");
 	const firstFrame = document.querySelector("#firstFrame");
 	const secondFrame = document.querySelector("#secondFrame");
 	const thirdFrame = document.querySelector("#thirdFrame");
-	
 
 	//User Object to save Coin and Pity
 	let userStats = {
@@ -19,6 +20,8 @@ function slotMachine() {
 		pityFive: [],
 		pityThree: [],
 		winStreak: [],
+		winLose: "",
+		freeSpinCount: 0,
 		spinCount: 0,
 		doubleWin: false,
 
@@ -175,9 +178,9 @@ function slotMachine() {
 			}
 		},
 		freeSpin: function () {
-			userStats.coin += inputCoinInSlotMachine;
-			coinStats.innerText = userStats.coin;
-			alert("Score Event: Free Spin this round!");
+			userStats.freeSpinCount += 1;
+			freeSpinCounter.innerText = "";
+			freeSpinCounter.innerText = userStats.freeSpinCount;
 		},
 		freeCoin: function () {
 			let scoreEventaddCoin = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
@@ -203,13 +206,13 @@ function slotMachine() {
 	frameSpecialEvent = {
 		speicalEvent: [
 			//Overwiev of the event on wich number
-			{ name: "WinCoin", number: 0},
-			{ name: "nothing", number: 1},
-			{ name: "freeSpin", number: 2},
-			{ name: "nothing", number: 3},
-			{ name: "freeSpin", number: 4},
-			{ name: "nothing", number: 5},
-			{ name: "winScore", number: 6},
+			{ name: "WinCoin", number: 0 },
+			{ name: "nothing", number: 1 },
+			{ name: "freeSpin", number: 2 },
+			{ name: "nothing", number: 3 },
+			{ name: "freeSpin", number: 4 },
+			{ name: "nothing", number: 5 },
+			{ name: "winScore", number: 6 },
 		],
 		nothing: function () {
 			return;
@@ -225,7 +228,9 @@ function slotMachine() {
 			scoreStats.innerText = userStats.score;
 		},
 		freeSpinEvent: function () {
-			userStats.coin += inputCoinInSlotMachine;
+			userStats.freeSpinCount += 1;
+			freeSpinCounter.innerText = "";
+			freeSpinCounter.innerText = userStats.freeSpinCount;
 		},
 		checkFrameSameNumber: function (first, second, third) {
 			if (first === second && first === third && second === third) {
@@ -250,7 +255,7 @@ function slotMachine() {
 					frameSpecialEvent.freeSpinEvent();
 					break;
 				case 6:
-					console.winScore("SameFrameEvent: winScore");
+					console.log("SameFrameEvent: winScore");
 					frameSpecialEvent.winScore();
 					break;
 				default:
@@ -353,9 +358,37 @@ function slotMachine() {
 			userStats.pityThree = [];
 			userStats.winStreak = [];
 			userStats.score = 0;
+			userStats.freeSpinCount = 0;
 
 			coinStats.innerText = userStats.coin;
 			scoreStats.innerText = userStats.score;
+			freeSpinCounter.innerText = "No free Spins";
+		}
+	}
+	function checkBetValue(betValue) {
+		if (isNaN(betValue)) {
+			alert("BetValue can't be nothing!");
+			coinStats.innerText = userStats.coin;
+			scoreStats.innerText = userStats.score;
+			return;
+		}
+		if (betValue > 20 || betValue < 1) {
+			alert(
+				"The bet amount is in the wrong ranche! Pleas set your bet Value between 1-20."
+			);
+			return;
+		} else if (userStats.coin - betValue < 0) {
+			alert("You are broke.");
+			return;
+		}
+	}
+	function checkPittyAndStartSpin() {
+		if (userStats.pityFive.length >= 5) {
+			slotMachineStats.pitySpin();
+		} else if (userStats.pityThree.length >= 3) {
+			slotMachineStats.pitySpin();
+		} else {
+			slotMachineStats.spin();
 		}
 	}
 
@@ -376,26 +409,36 @@ function slotMachine() {
 			"%cMoney Spend: " + inputCoinInSlotMachine,
 			"color: lightblue; font-weight: bold"
 		);
-		if (betValue > 20 || betValue < 1) {
-			alert(
-				"The bet amount is in the wrong ranche! Pleas set your bet Value between 1-20."
-			);
-			return;
-		} else if (userStats.coin - betValue < 0) {
-			alert("You are broke.");
-			return;
-		}
-
+		
+		checkBetValue(betValue);
 		userStats.updateScore();
 		slotMachineStats.scoreCheckEvent();
-
-		if (userStats.pityFive.length >= 5) {
-			slotMachineStats.pitySpin();
-		} else if (userStats.pityThree.length >= 3) {
-			slotMachineStats.pitySpin();
-		} else {
-			slotMachineStats.spin();
+		checkPittyAndStartSpin();
+		
+	});
+	freeSpinBtn.addEventListener("click", () => {
+		let spinCountText = document.querySelector("#freeSpinCounter");
+		if (userStats.freeSpinCount <= 0 || typeof spinCountText === "string") {
+			console.log("NO FREE SPINS");
+			spinCountText.innerText = "";
+			spinCountText.innerText = "You don't have any free Spins left!";
+			return;
 		}
+		console.log("FREE SPIN IN USE");
+		userStats.freeSpinCount -= 1;
+		spinCountText.innerText = "";
+		spinCountText.innerText = userStats.freeSpinCount;
+		let betValue = parseInt(
+			document.querySelector("#userCoinInSlotMachine").value
+		);
+		inputCoinInSlotMachine = parseInt(
+			document.querySelector("#userCoinInSlotMachine").value
+		);
+
+		checkBetValue(betValue);
+		userStats.updateScore();
+		slotMachineStats.scoreCheckEvent();
+		checkPittyAndStartSpin();
 	});
 
 	refreshBtn.addEventListener("click", refresh);
