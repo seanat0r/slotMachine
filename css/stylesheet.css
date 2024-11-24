@@ -93,7 +93,7 @@ header {
     text-align: center;
     height: 4rem;
     margin: 0 7.8rem 0 7.8rem;
-    padding: 0 1rem 0 1rem;
+    
     border-top: #000 solid;
     border-left: #000 solid;
     border-right: #000 solid;
@@ -103,13 +103,14 @@ header {
 #displayWin, #displayEvent {
     height: 100%;
     width: 50%;
-    text-align: center;;
+    text-align: center;
 }
 #displayWin {
    display: flex;
    justify-content: center;
    align-items: center;
    border-right: #000 solid;
+   border-radius: 6.75px 0 0 0;
    
 }
 #displayEvent {

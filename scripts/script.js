@@ -5,6 +5,8 @@ function slotMachine() {
 	let inputCoinInSlotMachine = parseInt(
 		document.querySelector("#userCoinInSlotMachine").value
 	);
+	const displayWinLose = document.querySelector("#displayWinLose");
+	const displayWinBox = document.querySelector("#displayWin");
 	let freeSpinCounter = document.querySelector("#freeSpinCounter");
 	const startBtn = document.querySelector("#startBtn");
 	const freeSpinBtn = document.querySelector("#freeSpinBtn");
@@ -96,9 +98,15 @@ function slotMachine() {
 				randomSecondFrame === randomThirdFrame &&
 				randomFirstFrame === randomThirdFrame
 			) {
+				displayWinLose.innerText = "";
+				displayWinLose.innerText = "WIN!";
+				displayWinBox.style.background = "#00CF00";
 				slotMachineStats.win();
 				displayWin();
 			} else {
+				displayWinLose.innerText = "";
+				displayWinLose.innerText = "LOSE!";
+				displayWinBox.style.background = "#CF0000";
 				slotMachineStats.lose();
 				displayLose();
 			}
@@ -127,9 +135,15 @@ function slotMachine() {
 				randomSecondFrame === randomThirdFrame &&
 				randomFirstFrame === randomThirdFrame
 			) {
+				displayWinLose.innerText = "";
+				displayWinLose.innerText = "WIN!";
+				displayWinBox.style.background = "#00CF00";
 				slotMachineStats.win();
 				displayWin();
 			} else {
+				displayWinLose.innerText = "";
+				displayWinLose.innerText = "LOSE!";
+				displayWinBox.style.background = "#CF0000";
 				slotMachineStats.lose();
 				displayLose();
 			}
