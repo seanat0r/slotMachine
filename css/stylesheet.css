@@ -23,6 +23,7 @@ header {
     width: 100%;
     top: 0;
     background-color: #f0f8ff;
+    z-index: 10;
 
 }
 .title {
@@ -92,7 +93,8 @@ header {
     align-items: center;
     text-align: center;
     height: 4rem;
-    margin: 0 7.8rem 0 7.8rem;
+    width: 70%;
+    margin: 0 7.8rem 0 11rem;
     
     border-top: #000 solid;
     border-left: #000 solid;
@@ -117,6 +119,7 @@ header {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
 }
 
 /* SlotMachine */
@@ -132,6 +135,7 @@ header {
     height: 20rem;
     text-align: center;
     margin: 0 75% 0 10%;
+    z-index: 5;
 }
 
 .slotMachineGrid {
@@ -156,6 +160,8 @@ header {
     margin: 0 0 0.5rem 0;
     padding-left: 0.5rem;
     display: grid;
+    overflow: hidden;
+    position: relative;
 }
 #firstFrame {
     border-radius: 10px 0 0 10px;
@@ -233,4 +239,31 @@ header {
 }
 #watermelon {
     background-image: url("../images/watermelon.png");
+}
+
+
+/* OFF // ON */
+.off {
+    background-color: #67676b;
+    cursor: wait;
+    pointer-events: none;
+}
+
+
+/* SPIN ANIMATION */
+
+@keyframes symbol-spin {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.symbol {
+    animation: symbol-spin 3s linear forwards;
+    will-change: transform, opacity;
 }

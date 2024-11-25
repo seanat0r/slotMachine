@@ -29,8 +29,9 @@
                     The more coin you set,
                     more coins can you win. If you hit 0 Coin you lose. You can anytime reset
                     with the refresh button underneath the spin button. <br>
+                    During your gamble, you can get free Spins, to use them click on "FREE SPIN". <br>
                     <span class="importantText">Beware that refreshing or any other activity that restart or
-                        refreshing this browser tap will delete your Coins and
+                        refreshing this browser tap will delete your current Session and
                         you need to start again!</span> <br>
                     I wish you luck</p>
             </section>
@@ -69,7 +70,8 @@
             </div>
             <div id="displayEvent">
                 <!-- Event -->
-                 <p>No events yet</p>
+                 <p id="displayEventText">No events yet</p>
+                 <!-- Free Spins Counter -->
                  <p id="freeSpinCounter">No free Spins</p>
             </div>
         </div>
@@ -84,7 +86,7 @@
                         <div class="frame" id="thirdFrame"></div>
                     </div>
                     <div class="button">
-                        <input type="number" min="1" max="20" id="userCoinInSlotMachine">
+                        <input type="number" min="1" max="20" id="userCoinInSlotMachine" placeholder="eg. 7 Coin">
                         <button class="startBtn" id="startBtn">START SPIN!</button>
                         <button class="freeSpin" id="freeSpinBtn">FREE SPIN</button>
                         <button class="refreshBtn" id="refreshBtn">REFRESH</button>

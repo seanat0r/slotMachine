@@ -5,6 +5,8 @@ function slotMachine() {
 	let inputCoinInSlotMachine = parseInt(
 		document.querySelector("#userCoinInSlotMachine").value
 	);
+	const displayEvent = document.querySelector("#displayEventText");
+	const displayEventBackground = document.querySelector("#displayEvent");
 	const displayWinLose = document.querySelector("#displayWinLose");
 	const displayWinBox = document.querySelector("#displayWin");
 	let freeSpinCounter = document.querySelector("#freeSpinCounter");
@@ -23,13 +25,65 @@ function slotMachine() {
 		pityThree: [],
 		winStreak: [],
 		winLose: "",
-		freeSpinCount: 0,
+		freeSpinCount: 5,
 		spinCount: 0,
 		doubleWin: false,
+		displayEvent: "",
 
 		updateScore: function () {
 			userStats.score += inputCoinInSlotMachine;
 			scoreStats.innerText = userStats.score;
+		},
+		displayAllEvent: function (amount) {
+			switch (userStats.displayEvent) {
+				case "ScoreFreeSpin":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "From Score Event: +1 Free Spin";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "ScoreFreeMoney":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "From Score Event: " + amount + " Coins";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "ScoreFreeScore":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "From Score Event: " + amount + " Score";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "ScoreDoubleWin":
+					displayEvent.innerText = "";
+					displayEvent.innerText =
+						"From Score Event: Win guaranteed and double the win";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "ScoreJackPot":
+					displayEvent.innerText = "";
+					displayEvent.innerText =
+						"From Score Event: JACKPOT! You got +" + amount + " Coins";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "FrameWinCoin":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "Same Picture: +" + amount + " Coins";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "FrameFreeSpin":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "Same Picture: +1 Free Spin";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				case "FrameWinScore":
+					displayEvent.innerText = "";
+					displayEvent.innerText = "Same Picture: +" + amount + " Score";
+					displayEventBackground.style.background = "#00CF00";
+					break;
+				default:
+					displayEvent.innerText = "";
+					displayEvent.innerText = "No event";
+					displayEventBackground.style.background = "#f0f8ff";
+					break;
+			}
 		},
 	};
 
@@ -60,6 +114,7 @@ function slotMachine() {
 				"YOUR WIN (with streak): %c" + addCoin,
 				"color: orange; font-weight: bold"
 			);
+			winSound();
 			userStats.coin -= betAmount;
 			userStats.coin += addCoin;
 			console.log("New Coin: " + userStats.coin);
@@ -152,9 +207,13 @@ function slotMachine() {
 			userStats.doubleWin = false;
 			userStats.spinCount++;
 
-			if (userStats.score % 50 === 0 || userStats.spinCount % 5 === 0) {
+			if (
+				userStats.score % 50 === 0 ||
+				userStats.score % 33 === 0 ||
+				userStats.spinCount % 5 === 0
+			) {
 				const chance = Math.random();
-				if (chance <= 0.475) {
+				if (chance <= 0.45) {
 					slotMachineStats.scoreTriggerEvent();
 				} else {
 					console.log("No Score-Event: ", userStats.score);
@@ -170,10 +229,15 @@ function slotMachine() {
 					chance: 0.4,
 					action: slotMachineStats.freeSpin,
 				},
-				{ type: "free Money", chance: 0.3, action: slotMachineStats.freeCoin },
+				{ type: "free Money", chance: 0.25, action: slotMachineStats.freeCoin },
+				{
+					type: "free Score",
+					chance: 0.245,
+					action: slotMachineStats.freeScore,
+				},
 				{
 					type: "Free Win with double the win",
-					chance: 0.2,
+					chance: 0.1,
 					action: slotMachineStats.freeWinDouble,
 				},
 				{ type: "JackPot", chance: 0.005, action: slotMachineStats.JackPot },
@@ -195,25 +259,43 @@ function slotMachine() {
 			userStats.freeSpinCount += 1;
 			freeSpinCounter.innerText = "";
 			freeSpinCounter.innerText = userStats.freeSpinCount;
+			userStats.displayEvent = "ScoreFreeSpin";
+			userStats.displayAllEvent();
+			eventSound();
 		},
 		freeCoin: function () {
-			let scoreEventaddCoin = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
-			userStats.coin += scoreEventaddCoin;
+			let scoreEventAddCoin = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+			userStats.coin += scoreEventAddCoin;
 			coinStats.innerText = userStats.coin;
-			alert("Score Event: EXTRA COIN! +" + scoreEventaddCoin);
+			userStats.displayEvent = "ScoreFreeMoney";
+			userStats.displayAllEvent(scoreEventAddCoin);
+			eventSound();
+		},
+		freeScore: function () {
+			let scoreEventAddScore = Math.floor(Math.random() * (50 - 10 + 1)) + 10;
+			userStats.score += scoreEventAddScore;
+			scoreStats.innerText = userStats.score;
+			userStats.displayEvent = "ScoreFreeScore";
+			userStats.displayAllEvent(scoreEventAddScore);
+			eventSound();
 		},
 		freeWinDouble: function () {
 			userStats.doubleWin = true;
-			alert("Score Event: WIN GUARANTEED AND DOUBLE THE WIN!");
+			userStats.displayEvent = "ScoreDoubleWin";
+			userStats.displayAllEvent();
+			eventSound();
 		},
 		JackPot: function () {
-			userStats.coin += Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+			let jackpotCoin = Math.floor(Math.random() * (1000 - 100 + 1)) + 100;
+			userStats.coin += jackpotCoin;
 			console.log(
 				"%cJACKPOT!!!",
 				"color: lightgreen; font-weight: bold, font-size: 25px"
 			);
 			coinStats.innerText = userStats.coin;
-			alert("Score Event: JACKPOT!!!");
+			userStats.displayEvent = "ScoreJackPot";
+			userStats.displayAllEvent(jackpotCoin);
+			eventSound();
 		},
 	};
 
@@ -235,16 +317,25 @@ function slotMachine() {
 			let addCoin = Math.floor(Math.random() * 10) + 1;
 			userStats.coin += addCoin;
 			coinStats.innerText = userStats.coin;
+			userStats.displayEvent = "FrameWinCoin";
+			userStats.displayAllEvent(addCoin);
+			eventSound();
 		},
 		winScore: function () {
 			let addScore = Math.floor(Math.random() * 10) + 1;
 			userStats.score += addScore;
 			scoreStats.innerText = userStats.score;
+			userStats.displayEvent = "FrameWinScore";
+			userStats.displayAllEvent(addScore);
+			eventSound();
 		},
 		freeSpinEvent: function () {
 			userStats.freeSpinCount += 1;
 			freeSpinCounter.innerText = "";
 			freeSpinCounter.innerText = userStats.freeSpinCount;
+			userStats.displayEvent = "FrameFreeSpin";
+			userStats.displayAllEvent();
+			eventSound();
 		},
 		checkFrameSameNumber: function (first, second, third) {
 			if (first === second && first === third && second === third) {
@@ -347,6 +438,18 @@ function slotMachine() {
 			} else {
 				console.log(`Error: Frame not found for index ${index}`);
 			}
+			animation(iconArray);
+		});
+	}
+
+	function animation(iconArray) {
+		console.log(iconArray);
+		const frames = [firstFrame, secondFrame, thirdFrame];
+		iconArray.forEach((element, index) => {
+			const symbol = frames[index].firstChild;
+			if (symbol) {
+				symbol.classList.add("symbol");
+			}
 		});
 	}
 
@@ -374,27 +477,55 @@ function slotMachine() {
 			userStats.score = 0;
 			userStats.freeSpinCount = 0;
 
+			userStats.displayEvent = "";
+			userStats.displayAllEvent();
+
 			coinStats.innerText = userStats.coin;
 			scoreStats.innerText = userStats.score;
 			freeSpinCounter.innerText = "No free Spins";
 		}
 	}
+
+	function soundStart() {
+		const clickSound = new Audio("../sounds/slotmachine-sound.wav");
+		clickSound.currentTime = 0;
+		clickSound.volume = 0.1;
+		clickSound.play();
+	}
+
+	function winSound() {
+		const clickSound = new Audio("../sounds/slotmachine-win.wav");
+		clickSound.currentTime = 0;
+		clickSound.volume = 0.2;
+		setTimeout(() => {
+			clickSound.play();
+		}, 1500);
+	}
+
+	function eventSound() {
+		const clickSound = new Audio("../sounds/slotmachine-event.wav");
+		clickSound.currentTime = 0;
+		clickSound.volume = 0.4;
+		clickSound.play();
+	}
+
 	function checkBetValue(betValue) {
 		if (isNaN(betValue)) {
 			alert("BetValue can't be nothing!");
 			coinStats.innerText = userStats.coin;
 			scoreStats.innerText = userStats.score;
-			return;
+			return false;
 		}
 		if (betValue > 20 || betValue < 1) {
 			alert(
 				"The bet amount is in the wrong ranche! Pleas set your bet Value between 1-20."
 			);
-			return;
+			return false;
 		} else if (userStats.coin - betValue < 0) {
 			alert("You are broke.");
-			return;
+			return false;
 		}
+		return true;
 	}
 	function checkPittyAndStartSpin() {
 		if (userStats.pityFive.length >= 5) {
@@ -406,7 +537,24 @@ function slotMachine() {
 		}
 	}
 
-	startBtn.addEventListener("click", () => {
+	function deactivate() {
+		startBtn.classList.add("off");
+		freeSpinBtn.classList.add("off");
+		startBtn.removeEventListener("click", handleButton);
+		freeSpinBtn.removeEventListener("click", handleButtonFreeSpin);
+		setTimeout(() => {
+			startBtn.addEventListener("click", handleButton);
+			startBtn.classList.remove("off");
+			freeSpinBtn.addEventListener("click", handleButtonFreeSpin);
+			freeSpinBtn.classList.remove("off");
+		}, 2000);
+	}
+
+	startBtn.addEventListener("click", handleButton);
+
+	function handleButton() {
+		deactivate();
+		soundStart();
 		console.log("%cStart!", "color: lightblue; font-weight: bold");
 		console.log(
 			"%cYou money: " + userStats.coin,
@@ -423,14 +571,18 @@ function slotMachine() {
 			"%cMoney Spend: " + inputCoinInSlotMachine,
 			"color: lightblue; font-weight: bold"
 		);
-		
-		checkBetValue(betValue);
+		userStats.displayEvent = "";
+		userStats.displayAllEvent();
+		if (!checkBetValue(betValue)) {
+			return;
+		}
 		userStats.updateScore();
 		slotMachineStats.scoreCheckEvent();
 		checkPittyAndStartSpin();
-		
-	});
-	freeSpinBtn.addEventListener("click", () => {
+	}
+	freeSpinBtn.addEventListener("click", handleButtonFreeSpin);
+
+	function handleButtonFreeSpin() {
 		let spinCountText = document.querySelector("#freeSpinCounter");
 		if (userStats.freeSpinCount <= 0 || typeof spinCountText === "string") {
 			console.log("NO FREE SPINS");
@@ -439,21 +591,29 @@ function slotMachine() {
 			return;
 		}
 		console.log("FREE SPIN IN USE");
-		userStats.freeSpinCount -= 1;
-		spinCountText.innerText = "";
-		spinCountText.innerText = userStats.freeSpinCount;
+		deactivate();
+		soundStart();
+
 		let betValue = parseInt(
 			document.querySelector("#userCoinInSlotMachine").value
 		);
 		inputCoinInSlotMachine = parseInt(
 			document.querySelector("#userCoinInSlotMachine").value
 		);
+		userStats.displayEvent = "";
+		userStats.displayAllEvent();
+		if (!checkBetValue(betValue)) {
+			return;
+		}
+		userStats.coin += inputCoinInSlotMachine;
+		userStats.freeSpinCount -= 1;
+		spinCountText.innerText = "";
+		spinCountText.innerText = userStats.freeSpinCount;
 
-		checkBetValue(betValue);
 		userStats.updateScore();
 		slotMachineStats.scoreCheckEvent();
 		checkPittyAndStartSpin();
-	});
+	}
 
 	refreshBtn.addEventListener("click", refresh);
 }
