@@ -25,7 +25,7 @@ function slotMachine() {
 		pityThree: [],
 		winStreak: [],
 		winLose: "",
-		freeSpinCount: 5,
+		freeSpinCount: 0,
 		spinCount: 0,
 		doubleWin: false,
 		displayEvent: "",
