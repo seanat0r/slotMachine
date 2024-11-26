@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
     <link rel="manifest" href="images/favicon_io/site.webmanifest">
-    <title>Document</title>
+    <title>Slotmachine</title>
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="scripts/script.js" defer></script>
 </head>
@@ -15,32 +15,64 @@
     <header>
         <h1 class="title">The Fortune Slot Machine</h1>
         <div class="coin">
+            <img class="pictureCoin" src="images/score.png" alt="score">
+            <p id="score">0</p>
             <img class="pictureCoin" src="images/coin.png" alt="Coin">
-            <p>10</p>
+            <p id="coin">50</p>
         </div>
     </header>
     <main>
         <article class="grid-container">
             <section class="Explanation">
                 <h2>How does it Work?</h2>
-                <p>Click on The button to start the spin. Each spin cost a minimum of 1 Coin.
-                    The more coin you set,
-                    more coins can you win. If you hit 0 Coin you lose. You can anytime reset
-                    with the refresh button underneath the spin button. <br>
-                    <span class="importantText">Beware that refreshing or any other activity that restart or
-                        refreshing this browser tap will delete your Coins and
-                        you need to start again!</span> <br>
-                    I wish you luck</p>
+                <p>Click the button to start the spin. Each spin costs a minimum of 1 coin, and you can bet up to a maximum of 20 coins. 
+                    The more coins you bet, the more coins you can win. If you hit 0 coins, you lose. You can reset the game at any time 
+                    using the refresh button below the spin button. <br>
+                    During your game, you can earn free spins. To use them, click on "FREE SPIN". <br>
+                    <span class="importantText">Beware that refreshing the browser or any activity that restarts the browser tab will delete your 
+                        current session, and you will need to start again!</span> <br>
+                    Good Luck!</p>
+            </section>
+            <section class="specialEventExplainer">
+                <h2>Special Events</h2>
+                <h3>Pitty</h3>
+                <p>The pity system depends on your bet, which determines which pity system starts tracking. It's important to know that as soon as you 
+                    activate another pity system, the current one will be reset and will need to be built from scratch. <br>
+                    - The first pity system tracks your losing streak when you bet 10 coins or less. A losing streak of 5 activates this pity system. 
+                    You will lose the pity bonus as soon as you win or bet more than 10 coins in the next round.<br>
+                    - The second pity system works similarly but only tracks when you bet more than 10 coins. It activates with a losing streak of 3.</p>
+                <h3>Win Streak</h3>
+                <p>If you win more than 3 games in a row, every win after that will double the number of coins you earn.</p>
+                <h3>Score Event</h3>
+                <p>At random scores, you can trigger different score events. These events depend on how many games you’ve played, your total score, 
+                       and a bit of luck. <br>
+                       Possible rewards include the "Jackpot," which gives you a minimum of 100 coins!</p>
+                <h3>Same Symbol Event</h3>
+                <p>If you get three of the same symbols, you might earn a special reward.</p>
             </section>
             <section class="keyboard">
-                <h2>Shortcut for keyboard</h2>
+                <h2>Keyboard Shortcuts</h2>
                 <ul class="keyboardShortcuts">
-                    <li>Enter = start a spin OR next</li>
-                    <li>0-9 = set your Coin</li>
-                    <li> R = reset</li> 
+                    <li>Enter / Space = Start a spin or continue</li>
+                    <li>f = Free Spin</li>
+                    <li>r = Reset</li>
+                    <li>0-9 = Set your bet</li>
+                    <li>Backspace = Delete the number</li>
                 </ul>
             </section>
         </article>
+        <div class="displayEventAndWin">
+            <div id="displayWin">
+                <!-- Win/Lose -->
+                 <p id="displayWinLose">No games played </p>
+            </div>
+            <div id="displayEvent">
+                <!-- Event -->
+                 <p id="displayEventText">No events yet</p>
+                 <!-- Free Spins Counter -->
+                 <p id="freeSpinCounter">No free Spins</p>
+            </div>
+        </div>
         <article class="slotMachine" id="slotMachine">
             <div class="slotMachineFrame">
                 <h2>Do you have Luck?</h2>
@@ -50,21 +82,15 @@
                         <div class="frame" id="firstFrame"></div>
                         <div class="frame" id="secondFrame"></div>
                         <div class="frame" id="thirdFrame"></div>
-                        <div class="winLose" id="winLose">
-                            <!-- Displays over displayFrame if you Won/Lose -->
-                        </div>
                     </div>
                     <div class="button">
-                        <input type="number" min="1" id="userCoinInSlotMachine">
+                        <input type="number" min="1" max="20" id="userCoinInSlotMachine" placeholder="eg. 7 Coin">
                         <button class="startBtn" id="startBtn">START SPIN!</button>
+                        <button class="freeSpin" id="freeSpinBtn">FREE SPIN</button>
                         <button class="refreshBtn" id="refreshBtn">REFRESH</button>
                     </div>
                 </div>
             </div>
-            <!-- Left/Right -Foot for CSS only; Just to look better -->
-            <div class="leftFoot"></div>
-            <div class="rightFoot"></div>
-
         </article>
     </main>
 </body>
