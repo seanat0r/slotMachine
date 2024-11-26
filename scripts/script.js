@@ -17,7 +17,6 @@ function slotMachine() {
 	const secondFrame = document.querySelector("#secondFrame");
 	const thirdFrame = document.querySelector("#thirdFrame");
 
-	//User Object to save Coin and Pity
 	let userStats = {
 		coin: parseInt(coinStats.textContent),
 		score: 0,
@@ -43,12 +42,12 @@ function slotMachine() {
 					break;
 				case "ScoreFreeMoney":
 					displayEvent.innerText = "";
-					displayEvent.innerText = "From Score Event: " + amount + " Coins";
+					displayEvent.innerText = "From Score Event: +" + amount + " Coins";
 					displayEventBackground.style.background = "#00CF00";
 					break;
 				case "ScoreFreeScore":
 					displayEvent.innerText = "";
-					displayEvent.innerText = "From Score Event: " + amount + " Score";
+					displayEvent.innerText = "From Score Event: +" + amount + " Score";
 					displayEventBackground.style.background = "#00CF00";
 					break;
 				case "ScoreDoubleWin":
@@ -87,7 +86,6 @@ function slotMachine() {
 		},
 	};
 
-	//SlotMachine
 	let slotMachineStats = {
 		win: function () {
 			let addCoin = 0;
@@ -119,6 +117,7 @@ function slotMachine() {
 			userStats.coin += addCoin;
 			console.log("New Coin: " + userStats.coin);
 			pity(true);
+			return addCoin;
 		},
 		lose: function () {
 			console.log(
@@ -153,10 +152,11 @@ function slotMachine() {
 				randomSecondFrame === randomThirdFrame &&
 				randomFirstFrame === randomThirdFrame
 			) {
+				let winAmount = slotMachineStats.win();
 				displayWinLose.innerText = "";
-				displayWinLose.innerText = "WIN!";
+				displayWinLose.innerText = "WIN! +" + winAmount + " Coins";
 				displayWinBox.style.background = "#00CF00";
-				slotMachineStats.win();
+
 				displayWin();
 			} else {
 				displayWinLose.innerText = "";
@@ -190,10 +190,11 @@ function slotMachine() {
 				randomSecondFrame === randomThirdFrame &&
 				randomFirstFrame === randomThirdFrame
 			) {
+				let winAmount = slotMachineStats.win();
 				displayWinLose.innerText = "";
-				displayWinLose.innerText = "WIN!";
+				displayWinLose.innerText = "WIN! +" + winAmount + " Coins";
 				displayWinBox.style.background = "#00CF00";
-				slotMachineStats.win();
+
 				displayWin();
 			} else {
 				displayWinLose.innerText = "";
@@ -443,7 +444,6 @@ function slotMachine() {
 	}
 
 	function animation(iconArray) {
-		console.log(iconArray);
 		const frames = [firstFrame, secondFrame, thirdFrame];
 		iconArray.forEach((element, index) => {
 			const symbol = frames[index].firstChild;
@@ -542,19 +542,21 @@ function slotMachine() {
 		freeSpinBtn.classList.add("off");
 		startBtn.removeEventListener("click", handleButton);
 		freeSpinBtn.removeEventListener("click", handleButtonFreeSpin);
+		document.removeEventListener("keydown", handleGolabelKeydown);
 		setTimeout(() => {
 			startBtn.addEventListener("click", handleButton);
 			startBtn.classList.remove("off");
 			freeSpinBtn.addEventListener("click", handleButtonFreeSpin);
 			freeSpinBtn.classList.remove("off");
+			document.addEventListener("keydown", handleGolabelKeydown);
 		}, 2000);
 	}
 
 	startBtn.addEventListener("click", handleButton);
 
 	function handleButton() {
-		deactivate();
-		soundStart();
+		
+		
 		console.log("%cStart!", "color: lightblue; font-weight: bold");
 		console.log(
 			"%cYou money: " + userStats.coin,
@@ -576,6 +578,8 @@ function slotMachine() {
 		if (!checkBetValue(betValue)) {
 			return;
 		}
+		deactivate();
+		soundStart();
 		userStats.updateScore();
 		slotMachineStats.scoreCheckEvent();
 		checkPittyAndStartSpin();
@@ -591,8 +595,6 @@ function slotMachine() {
 			return;
 		}
 		console.log("FREE SPIN IN USE");
-		deactivate();
-		soundStart();
 
 		let betValue = parseInt(
 			document.querySelector("#userCoinInSlotMachine").value
@@ -605,6 +607,9 @@ function slotMachine() {
 		if (!checkBetValue(betValue)) {
 			return;
 		}
+		deactivate();
+		soundStart();
+
 		userStats.coin += inputCoinInSlotMachine;
 		userStats.freeSpinCount -= 1;
 		spinCountText.innerText = "";
@@ -614,8 +619,35 @@ function slotMachine() {
 		slotMachineStats.scoreCheckEvent();
 		checkPittyAndStartSpin();
 	}
+	function handleGolabelKeydown(event) {
+		let inputCoin = document.querySelector("#userCoinInSlotMachine");
+		if (event.key === " " || event.key === "Enter") {
+			handleButton();
+		} else if (event.key === "f") {
+			handleButtonFreeSpin();
+		} else if (event.key === "r") {
+			refresh();
+		} else if (
+			event.key === "0" ||
+			event.key === "1" ||
+			event.key === "2" ||
+			event.key === "3" ||
+			event.key === "4" ||
+			event.key === "5" ||
+			event.key === "6" ||
+			event.key === "7" ||
+			event.key === "8" ||
+			event.key === "9"
+		) {
+			inputCoin.value += event.key;
+		} else if (event.key === "Backspace") {
+			inputCoin.value = inputCoin.value.slice(0, -1);
+		}
+	}
 
 	refreshBtn.addEventListener("click", refresh);
+
+	document.addEventListener("keydown", handleGolabelKeydown);
 }
 
 slotMachine();
