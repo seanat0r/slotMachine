@@ -555,8 +555,6 @@ function slotMachine() {
 	startBtn.addEventListener("click", handleButton);
 
 	function handleButton() {
-		
-		
 		console.log("%cStart!", "color: lightblue; font-weight: bold");
 		console.log(
 			"%cYou money: " + userStats.coin,
@@ -639,9 +637,10 @@ function slotMachine() {
 			event.key === "8" ||
 			event.key === "9"
 		) {
-			inputCoin.value += event.key;
+			// setTimeout, becuase it prevent, if you  exp. clicked "1" -> got 11 in the input field!
+			setTimeout((inputCoin.value += event.key), 100);
 		} else if (event.key === "Backspace") {
-			inputCoin.value = inputCoin.value.slice(0, -1);
+			setTimeout((inputCoin.value = inputCoin.value.slice(0, -1)), 100);
 		}
 	}
 
