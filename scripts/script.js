@@ -487,14 +487,14 @@ function slotMachine() {
 	}
 
 	function soundStart() {
-		const clickSound = new Audio("/sounds/slotmachine-sound.wav");
+		const clickSound = new Audio("sounds/slotmachine-sound.wav");
 		clickSound.currentTime = 0;
 		clickSound.volume = 0.1;
 		clickSound.play();
 	}
 
 	function winSound() {
-		const clickSound = new Audio("/sounds/slotmachine-win.wav");
+		const clickSound = new Audio("sounds/slotmachine-win.wav");
 		clickSound.currentTime = 0;
 		clickSound.volume = 0.2;
 		setTimeout(() => {
@@ -503,7 +503,7 @@ function slotMachine() {
 	}
 
 	function eventSound() {
-		const clickSound = new Audio("/sounds/slotmachine-event.wav");
+		const clickSound = new Audio("sounds/slotmachine-event.wav");
 		clickSound.currentTime = 0;
 		clickSound.volume = 0.4;
 		clickSound.play();
