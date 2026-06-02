@@ -3,95 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
-    <link rel="manifest" href="images/favicon_io/site.webmanifest">
-    <title>Slotmachine</title>
+    <title>The Fortune Slot Machine</title>
     <link rel="stylesheet" href="css/stylesheet.css">
     <script src="scripts/script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1 class="title">The Fortune Slot Machine</h1>
-        <div class="coin">
-            <img class="pictureCoin" src="images/score.png" alt="score">
+<header>
+    <h1 class="title">The Fortune Slot Machine</h1>
+    <div class="stats-bar">
+        <div class="stat">
+            <img src="images/score.png" alt="score">
             <p id="score">0</p>
-            <img class="pictureCoin" src="images/coin.png" alt="Coin">
+        </div>
+        <div class="stat">
+            <img src="images/coin.png" alt="coin">
             <p id="coin">50</p>
         </div>
-    </header>
-    <main>
-        <article class="grid-container">
-            <section class="Explanation">
-                <h2>How does it Work?</h2>
-                <p>Click the button to start the spin. Each spin costs a minimum of 1 coin, and you can bet up to a maximum of 20 coins. 
-                    The more coins you bet, the more coins you can win. If you hit 0 coins, you lose. You can reset the game at any time 
-                    using the refresh button below the spin button. <br>
-                    During your game, you can earn free spins. To use them, click on "FREE SPIN". <br>
-                    <span class="importantText">Beware that refreshing the browser or any activity that restarts the browser tab will delete your 
-                        current session, and you will need to start again!</span> <br>
-                    Good Luck!</p>
-            </section>
-            <section class="specialEventExplainer">
-                <h2>Special Events</h2>
-                <h3>Pitty</h3>
-                <p>The pity system depends on your bet, which determines which pity system starts tracking. It's important to know that as soon as you 
-                    activate another pity system, the current one will be reset and will need to be built from scratch. <br>
-                    - The first pity system tracks your losing streak when you bet 10 coins or less. A losing streak of 5 activates this pity system. 
-                    You will lose the pity bonus as soon as you win or bet more than 10 coins in the next round.<br>
-                    - The second pity system works similarly but only tracks when you bet more than 10 coins. It activates with a losing streak of 3.</p>
-                <h3>Win Streak</h3>
-                <p>If you win more than 3 games in a row, every win after that will double the number of coins you earn.</p>
-                <h3>Score Event</h3>
-                <p>At random scores, you can trigger different score events. These events depend on how many games you’ve played, your total score, 
-                       and a bit of luck. <br>
-                       Possible rewards include the "Jackpot," which gives you a minimum of 100 coins!</p>
-                <h3>Same Symbol Event</h3>
-                <p>If you get three of the same symbols, you might earn a special reward.</p>
-            </section>
-            <section class="keyboard">
-                <h2>Keyboard Shortcuts</h2>
-                <ul class="keyboardShortcuts">
-                    <li>Enter / Space = Start a spin or continue</li>
-                    <li>f = Free Spin</li>
-                    <li>r = Reset</li>
-                    <li>0-9 = Set your bet</li>
-                    <li>Backspace = Delete the number</li>
-                </ul>
-            </section>
-        </article>
-        <div class="displayEventAndWin">
-            <div id="displayWin">
-                <!-- Win/Lose -->
-                 <p id="displayWinLose">No games played </p>
-            </div>
+    </div>
+</header>
+
+<main class="game-wrapper">
+    <section class="slot-container">
+        <div id="displayWin">
+            <p id="displayWinLose">No games played</p>
+        </div>
+
+        <div class="display-box">
             <div id="displayEvent">
-                <!-- Event -->
-                 <p id="displayEventText">No events yet</p>
-                 <!-- Free Spins Counter -->
-                 <p id="freeSpinCounter">No free Spins</p>
+                <p id="displayEventText">No events yet</p>
+                <p id="freeSpinCounter">No free Spins</p>
             </div>
         </div>
-        <article class="slotMachine" id="slotMachine">
-            <div class="slotMachineFrame">
-                <h2>Do you have Luck?</h2>
-                <div class="slotMachineGrid">
-                    <div class="displayFrame">
-                        <!-- Display the picture from Slot machine ind the frame -->
-                        <div class="frame" id="firstFrame"></div>
-                        <div class="frame" id="secondFrame"></div>
-                        <div class="frame" id="thirdFrame"></div>
-                    </div>
-                    <div class="button">
-                        <input type="number" min="1" max="20" id="userCoinInSlotMachine" placeholder="eg. 7 Coin">
-                        <button class="startBtn" id="startBtn">START SPIN!</button>
-                        <button class="freeSpin" id="freeSpinBtn">FREE SPIN</button>
-                        <button class="refreshBtn" id="refreshBtn">REFRESH</button>
-                    </div>
-                </div>
-            </div>
-        </article>
-    </main>
+
+        <div class="reel-container">
+            <div class="frame" id="firstFrame"></div>
+            <div class="frame" id="secondFrame"></div>
+            <div class="frame" id="thirdFrame"></div>
+        </div>
+
+        <div class="controls">
+            <input type="number" id="userCoinInSlotMachine" placeholder="eg. 7 Coin">
+            <button id="startBtn" class="btn-spin">START SPIN!</button>
+            <button id="freeSpinBtn" class="btn-sub">FREE SPIN</button>
+            <button id="refreshBtn" class="btn-sub">REFRESH</button>
+        </div>
+    </section>
+
+    <article class="info-container">
+        <section class="Explanation">
+            <h2>How does it Work?</h2>
+            <p>Click the button to start the spin. Each spin costs a minimum of 1 coin, and you can bet up to a maximum of 20 coins. The more coins you bet, the more coins you can win. If you hit 0 coins, you lose. You can reset the game at any time using the refresh button below the spin button. <br>
+                During your game, you can earn free spins. To use them, click on "FREE SPIN". <br>
+                <span class="importantText">Beware that refreshing the browser or any activity that restarts the browser tab will delete your current session, and you will need to start again!</span></p>
+        </section>
+
+        <section class="specialEventExplainer">
+            <h2>Special Events</h2>
+            <h3>Pitty</h3>
+            <p>The pity system depends on your bet. A losing streak of 5 activates the pity for bets ≤ 10. A losing streak of 3 activates the pity for bets > 10.</p>
+            <h3>Win Streak</h3>
+            <p>If you win more than 3 games in a row, every win after that will double the number of coins you earn.</p>
+            <h3>Score Event & Same Symbol</h3>
+            <p>At random scores, you can trigger events like the "Jackpot". If you get three of the same symbols, you might earn a special reward.</p>
+        </section>
+    </article>
+</main>
 </body>
 </html>

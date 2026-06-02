@@ -88,7 +88,7 @@ function slotMachine() {
 
 	let slotMachineStats = {
 		win: function () {
-			let addCoin = 0;
+			let addCoin;
 			let betAmount = inputCoinInSlotMachine;
 			if (betAmount <= 10) {
 				addCoin = Math.floor(Math.random() * 10) + 1;
@@ -619,6 +619,12 @@ function slotMachine() {
 	}
 	function handleGolabelKeydown(event) {
 		let inputCoin = document.querySelector("#userCoinInSlotMachine");
+		if (document.activeElement === inputCoin) {
+			if (event.key === "Enter") {
+				handleButton()
+			}
+			return;
+		}
 		if (event.key === " " || event.key === "Enter") {
 			handleButton();
 		} else if (event.key === "f") {
@@ -637,10 +643,9 @@ function slotMachine() {
 			event.key === "8" ||
 			event.key === "9"
 		) {
-			// setTimeout, becuase it prevent, if you  exp. clicked "1" -> got 11 in the input field!
-			setTimeout((inputCoin.value += event.key), 100);
+			inputCoin.value += event.key;
 		} else if (event.key === "Backspace") {
-			setTimeout((inputCoin.value = inputCoin.value.slice(0, -1)), 100);
+			inputCoin.value = inputCoin.value.slice(0, -1);
 		}
 	}
 
