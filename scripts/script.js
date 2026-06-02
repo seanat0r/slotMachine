@@ -88,7 +88,7 @@ function slotMachine() {
 
 	let slotMachineStats = {
 		win: function () {
-			let addCoin = 0;
+			let addCoin;
 			let betAmount = inputCoinInSlotMachine;
 			if (betAmount <= 10) {
 				addCoin = Math.floor(Math.random() * 10) + 1;
